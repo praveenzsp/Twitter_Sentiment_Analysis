@@ -136,16 +136,16 @@ def main():
         try:
             # percentage of positive tweets
             positive = 100 * len(ptweets) / len(tweets)
-            print("Positive tweets percentage: ", positive, '%')
+            # print("Positive tweets percentage: ", positive, '%')
             # picking negative tweets from tweets
 
             # percentage of negative tweets
             negative = 100 * len(ntweets) / len(tweets)
-            print("Negative tweets percentage: ", negative, '%')
+            # print("Negative tweets percentage: ", negative, '%')
 
             # percentage of neutral tweets
             neutral = 100 * (len(tweets) - (len(ntweets) + len(ptweets))) / len(tweets)
-            print("Neutral tweets percentage: ", neutral, '%')
+            # print("Neutral tweets percentage: ", neutral, '%')
         except ZeroDivisionError:
             print('No positive tweets')
 
@@ -153,16 +153,16 @@ def main():
         # api.plot(positive, negative, neutral)
 
         # printing some positive tweets
-        print("\n\nPositive tweets:")
+        # print("\n\nPositive tweets:")
         for tweet in ptweets:
-            positive_tweets.append(tweet['text'] + '\n\n')
-        print(*positive_tweets)
+            positive_tweets.append('🔦'+tweet['text'] + '\n\n')
+        # print(*positive_tweets)
 
         # printing some negative tweets
-        print("\n\nNegative tweets:")
+        # print("\n\nNegative tweets:")
         for tweet in ntweets:
-            negative_tweets.append(tweet['text'] + '\n\n')
-        print(*negative_tweets)
+            negative_tweets.append('🔦'+tweet['text'] + '\n\n')
+        # print(*negative_tweets)
 
 
         # plotting the percentages
@@ -183,11 +183,11 @@ def main():
         exit_button()
         application = Flask(__name__)
 
-        # @application.route('/')
-        # def home():
-        #     return render_template('index.html', positive=positive_tweets, negative=negative_tweets)
-        #
-        # application.run(debug=False)
+        @application.route('/')
+        def home():
+            return render_template('index.html', positive=positive_tweets, negative=negative_tweets)
+
+        application.run(debug=False)
 
     # input window design
     label1 = Label(root, text='Enter your query:', font=('Italic', 10))
@@ -199,15 +199,14 @@ def main():
     entry2 = Entry(root, width=14)
     entry2.grid(row=1, column=1, padx=10, pady=10)
     Button(root, text='submit to show graph', command=submit_button).grid(row=2, column=1, padx=10, pady=10)
-    Button(root, text='exit', command=exit_button).place(relx=0.5, rely=0.5)
+    # Button(root, text='exit', command=exit_button).place(relx=0.5, rely=0.5)
     # Button(root, text='show tweets', command=show_tweets_button).grid(row=2, column=1, padx=10, pady=10)
     label3 = Label(root, text='Open the below generated URL in browser to see tweets:')
     label3.grid(row=3, column=0,padx=10, pady=10)
     t1 = Text(root, width=30, height=1)
     t1.grid(row=3, column=1, padx=10, pady=10)
     Button(root, text='Generate URL', command=generate_button).grid(row=4, column=0,padx=10, pady=10)
-    # Button(root, text='Copy URL and exit', command=copy_and_exit_button).grid(row=4, column=1, padx=10, pady=10)
-
+    Button(root, text='Copy URL and exit', command=copy_and_exit_button).grid(row=4, column=1, padx=10, pady=10)
     root.configure(bg='lightskyblue1')
     root.title('Input Window')
     root.attributes('-fullscreen', False)
@@ -217,4 +216,5 @@ def main():
 
 
 if __name__ == '__main__':
+    # calling the main function
     main()
