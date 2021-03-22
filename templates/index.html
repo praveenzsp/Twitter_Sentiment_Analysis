@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+h1 {text-align: center;}
+h2 {text-align: center;}
+P  {text-align:center;}
+body{
+background-image:url({{url_for('static',filename='builtin/logo2.jpg')}});
+background-position:center;
+}
+</style>
+</head>
+<body>
+<h1 style = "color:DarkBlue;">TWITTER SENTIMENT ANALYSIS</h1>
+<h2>POSITIVE TWEETS</h2>
+{% for i in positive %}
+<P style="font-family:verdana">{{i}}</P>
+{% endfor %}
+<h2>NEGATIVE TWEETS</h2>
+{% for j in negative %}
+<P style="font-family:verdana">{{j}}</P>
+{% endfor %}
+</body>
+</html>
+
+
+
+
+
+
+
+
