@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 from flask import *
 from tkinter import *
 import pyperclip as pc
+from wordcloud import WordCloud, STOPWORDS
+from PIL import Image
+import numpy as np
 
 
 class TwitterClient:
@@ -117,6 +120,7 @@ def main():
     # api.flask_method()
     positive_tweets = []
     negative_tweets = []
+    # total_tweets=[]
 
     root = Tk()
     root.geometry('600x600')
@@ -149,6 +153,7 @@ def main():
         except ZeroDivisionError:
             print('No positive tweets')
 
+
         # plotting the percentages
         # api.plot(positive, negative, neutral)
 
@@ -163,6 +168,8 @@ def main():
         for tweet in ntweets:
             negative_tweets.append('🔦'+tweet['text'] + '\n\n')
         # print(*negative_tweets)
+        # Generate word cloud
+
 
 
         # plotting the percentages
@@ -177,6 +184,18 @@ def main():
     def generate_button():
         t1.insert(END, 'http://127.0.0.1:5000/')
 
+    # Define a function to plot word cloud
+    def plot_cloud():
+        my_list = positive_tweets + negative_tweets
+        unique_string = " ".join(my_list)
+        wordcloud = WordCloud(background_color='white', width=1000, max_font_size=256, random_state=42, max_words=2000, height=500,).generate(unique_string)
+        # plt.figure(figsize=(15, 8))
+        plt.imshow(wordcloud)
+        plt.axis("off")
+        plt.title('Wordcloud')
+        plt.show()
+        plt.close()
+
     # copy button functionality method
     def copy_and_exit_button():
         pc.copy('http://127.0.0.1:5000/')
@@ -188,6 +207,8 @@ def main():
             return render_template('index.html', positive=positive_tweets, negative=negative_tweets)
 
         application.run(debug=False)
+
+
 
     # input window design
     label1 = Label(root, text='Enter your query:', font=('Italic', 10))
@@ -207,6 +228,7 @@ def main():
     t1.grid(row=3, column=1, padx=10, pady=10)
     Button(root, text='Generate URL', command=generate_button).grid(row=4, column=0,padx=10, pady=10)
     Button(root, text='Copy URL and exit', command=copy_and_exit_button).grid(row=4, column=1, padx=10, pady=10)
+    Button(root, text='Generate wordcloud ', command=plot_cloud).grid(row=5, column=0, padx=10, pady=10)
     root.configure(bg='lightskyblue1')
     root.title('Input Window')
     root.attributes('-fullscreen', False)
